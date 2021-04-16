@@ -15,11 +15,10 @@ extern void ustart1(void);
 extern void ustart2(void);
 extern void ustart3(void);
 extern int asmswtch();
-extern debug_log(char *msg);
-
+extern int debug_log(char *msg);
 
 void schedule() {
-    
+
     /* loop through the PEntry table while there are
         any processes in RUN or BLOCKED states */
     while (!(proctab[1].p_status == ZOMBIE &&

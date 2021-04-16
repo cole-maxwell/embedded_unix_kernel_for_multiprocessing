@@ -33,6 +33,8 @@ void syscallc( int user_eax, int devcode, char *buff , int bufflen);
 char *debug_log_area = (char *)DEBUG_AREA;
 char *debug_record;  /* current pointer into log area */ 
 int saved_eflags;
+int exitcodes[3];
+int exitcodecount = 0;
 
 #define MAX_CALL 6
 
@@ -100,10 +102,8 @@ void k_init(){
   sysent[TWRITE].sy_narg = 3;
   sti();    /* user runs with interrupts on */
 
-  int saved_eflags = get_eflags();
   cli();    /* disable ints in CPU */
   schedule();   /* call the scheduler to decide which user program to run */
-  set_eflags(saved_eflags);   /* back to previous CPU int. status */
 }
 
 /* shut the system down */
@@ -112,10 +112,8 @@ void shutdown()
   kprintf("SHUTTING THE SYSTEM DOWN!\n");
   kprintf("Debug log from run:\n");
   kprintf("Marking kernel events as follows:\n");
-  kprintf("  ^a   COM2 input interrupt, a received\n");
   kprintf("  ~    COM2 output interrupt, ordinary char output\n");
-  kprintf("  ~e   COM2 output interrupt, echo output\n");
-  kprintf("  ~s   COM2 output interrupt, shutdown TX ints\n");
+  kprintf("  ~s   COM2 output interrupt, shutdown TX ints\n\n");
   kprintf("%s", debug_log_area);	/* the debug log from memory */
   kprintf("\nLEAVE KERNEL!\n\n");
   finale();		/* trap to Tutor */
@@ -152,21 +150,23 @@ void syscallc( int user_eax, int devcode, char *buff , int bufflen)
 
 int sysexit(int exit_code)  { 
 
-  kprintf("\nEXIT CODE IS %d\n", exit_code);
+  exitcodes[exitcodecount++] = exit_code;
   curproc->p_status = ZOMBIE;
 
-  /* if there are any processes in RUN or BLOCKED state, call scheduler to pick the next process to run */
+  /* if there are any processes in RUN or BLOCKED state,
+      call scheduler to pick the next process to run */
   if (!(proctab[1].p_status == ZOMBIE &&
         proctab[2].p_status == ZOMBIE &&
         proctab[3].p_status == ZOMBIE)) {
-    int saved_eflags = get_eflags();
 	  cli();			/* disable ints in CPU */
     schedule();
-    set_eflags(saved_eflags);     /* back to previous CPU int. status */
   }
   /* otherwise, all processes are ZOMBIE, so we shutdown */
   else {
-    kprintf("All processes are ZOMBIES ---> shutdown system\n");
+    kprintf("\n\nAll processes are ZOMBIES");
+    debug_log("(|3z-0)");
+    kprintf("\nExit codes: uprog1 = %d, uprog2 = %d, uprog3 = %d, \n\n",
+              exitcodes[0], exitcodes[1], exitcodes[2]);
 	  shutdown();
   }
 	return 0;    /* never happens, but keeps gcc happy */
