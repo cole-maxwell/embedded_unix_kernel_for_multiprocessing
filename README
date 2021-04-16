@@ -1,17 +1,12 @@
 
 README
 
-Author: 	Cole Maxwell (I do not have a partner this semester)
-Statement:	All work is my own.	
-Date:		4/15/2021
-
----- HOMEWORK 3 ----
-
+Author: 	Cole Maxwell
 
 -----------------------------------------------------------------------------------
-This directory contains following files:
+KEY FILES
 
-1) Files that the assignment asked for (I included my makefile since I made changes)
+1) Key Files
 
 README                  ---> authorship
 tsystm.h                ---> no change
@@ -22,12 +17,7 @@ crt01.s, uprog1.c       ---> user program 1 and corresponding assembly code
 crt02.s, uprog2.c       ---> user program 2 and corresponding assembly code
 crt03.s, uprog3.c       ---> user program 3 and corresponding assembly code
 
-2) The entire directory I was working with to run with the makefile as backup
-- /hw3
 -----------------------------------------------------------------------------------
-
-
-
 
 -----------------------------------------------------------------------------------
 Usage:
@@ -41,7 +31,7 @@ To run tunix.lnx with mulitple processes:
 --> go 100100
 
 To generate a new executable:
---> cd to /hw3
 --> make clean || spotless || tunix.lnx
+
 -----------------------------------------------------------------------------------
 
