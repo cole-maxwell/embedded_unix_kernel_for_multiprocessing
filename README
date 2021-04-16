@@ -1,0 +1,47 @@
+
+README
+
+Author: 	Cole Maxwell (I do not have a partner this semester)
+Statement:	All work is my own.	
+Date:		4/15/2021
+
+---- HOMEWORK 3 ----
+
+
+-----------------------------------------------------------------------------------
+This directory contains following files:
+
+1) Files that the assignment asked for (I included my makefile since I made changes)
+
+README                  ---> authorship
+tsystm.h                ---> no change
+tunix.c                 ---> kernel initialization, shutdown, process 0 added
+sched.c & sched.h       ---> scheduler
+tty.c                   ---> calls to sleep and wakeup added
+crt01.s, uprog1.c       ---> user program 1 and corresponding assembly code
+crt02.s, uprog2.c       ---> user program 2 and corresponding assembly code
+crt03.s, uprog3.c       ---> user program 3 and corresponding assembly code
+
+2) The entire directory I was working with to run with the makefile as backup
+- /hw3
+-----------------------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------------------
+Usage:
+
+To run tunix.lnx with mulitple processes:
+--> bootup tutor and tutor-vsever, login as tuser
+--> scp in tunix.lnx
+--> mtip -f tunix.lnx
+--> reboot tutor-vm
+--> ~downloading tunix.lnx
+--> go 100100
+
+To generate a new executable:
+--> cd to /hw3
+--> make clean || spotless || tunix.lnx
+-----------------------------------------------------------------------------------
+
